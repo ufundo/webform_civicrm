@@ -51,6 +51,12 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
    * @var \Drupal\webform\WebformSubmissionInterface
    */
   private $submission;
+
+  /**
+   * @var \Drupal\webform_civicrm\UtilsInterface
+   */
+  protected $utils;
+
   private $all_fields;
   private $all_sets;
   private $shared_address = [];

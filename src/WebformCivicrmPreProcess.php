@@ -31,6 +31,11 @@ class WebformCivicrmPreProcess extends WebformCivicrmBase implements WebformCivi
   private $all_fields;
   private $all_sets;
 
+  /**
+   * @var \Drupal\webform_civicrm\UtilsInterface
+   */
+  protected $utils;
+
   public function __construct(UtilsInterface $utils) {
     $this->utils = $utils;
   }

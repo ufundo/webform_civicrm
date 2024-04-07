@@ -31,6 +31,11 @@ class AdminForm implements AdminFormInterface {
   private $data;
 
   /**
+   * @var \Drupal\webform_civicrm\UtilsInterface
+   */
+  protected $utils;
+
+  /**
    * The shim allowing us to slowly port this code.
    *
    * @var \Drupal\webform\WebformInterface

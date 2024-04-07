@@ -55,6 +55,11 @@ abstract class WebformCivicrmTestBase extends CiviCrmTestBase {
   protected $adminUser;
 
   /**
+   * @var \Drupal\webform_civicrm\UtilsInterface
+   */
+  protected $utils;
+
+  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {

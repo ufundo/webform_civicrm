@@ -11,6 +11,11 @@ class Fields implements FieldsInterface {
    */
   protected $fieldMetadata = [];
 
+  /**
+   * @var \Drupal\webform_civicrm\UtilsInterface
+   */
+  protected $utils;
+
   public function __construct(UtilsInterface $utils) {
     $this->utils = $utils;
   }
