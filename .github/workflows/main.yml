@@ -158,11 +158,6 @@ jobs:
           /home/runner/civicrm-cv/cv api3 Extension.download install=1 key=com.drastikbydesign.stripe
           /home/runner/civicrm-cv/cv api3 Extension.download install=0 key=com.iatspayments.civicrm
           /home/runner/civicrm-cv/cv api3 Extension.download install=0 key=com.aghstrategies.uscounties
-      - name: temp patch iats for smarty4
-        run: |
-          cd ~/drupal/web/sites/default/files/civicrm/ext/com.iatspayments.civicrm
-          curl -L -O https://github.com/iATSPayments/com.iatspayments.civicrm/pull/449.patch
-          git apply 449.patch
       - uses: nanasess/setup-chromedriver@master
       - name: Run chromedriver
         run: chromedriver &
