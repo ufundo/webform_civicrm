@@ -16,6 +16,16 @@ final class ContributionPayLaterTest extends WebformCivicrmTestBase {
   private $_customGroup = [];
   private $_customFields = [];
 
+  /**
+   * @var string
+   */
+  private $country;
+
+  /**
+   * @var string
+   */
+  private $state;
+
   public function testReceiptParams() {
     $this->drupalLogin($this->rootUser);
     $this->redirectEmailsToDB();
@@ -272,7 +282,6 @@ final class ContributionPayLaterTest extends WebformCivicrmTestBase {
     $this->utils->wf_civicrm_api('contribution', 'delete', [
       'id' => $contribution['id'],
     ]);
-    $this->contribution_id = $contribution['id'];
 
     $address = $this->utils->wf_civicrm_api('Address', 'get', [
       'sequential' => 1,
