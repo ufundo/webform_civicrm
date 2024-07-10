@@ -2122,6 +2122,27 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
         }
       }
     }
+
+    // doPayment using PropertyBag expects an iso_code in the 'billingCountry' param
+    $countryName = $params['country'] ?? NULL;
+    $countryId = $params['country_id'] ?? NULL;
+    // providing country name throws deprecation warnings, which break the transaction
+    unset($params['country']);
+
+    // country id seems more reliable, so use that first
+    if ($countryId) {
+      $params['billingCountry'] = $this->utils->wf_civicrm_api4('Country', 'get', [
+        'select' => ['iso_code'],
+        'where' => [['id', '=', $countryId]]
+      ])->first()['iso_code'] ?? '';
+    }
+    elseif ($countryName) {
+      $params['billingCountry'] = $this->utils->wf_civicrm_api4('Country', 'get', [
+        'select' => ['iso_code'],
+        'where' => [['name', '=', $countryName]]
+      ])->first()['iso_code'] ?? '';
+    }
+
     // Ideally we would pass the correct id for the test processor through but that seems not to be the
     // case so load it here.
     if (!empty($params['is_test'])) {
