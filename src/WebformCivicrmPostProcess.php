@@ -2122,6 +2122,7 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
         }
       }
     }
+
     // Ideally we would pass the correct id for the test processor through but that seems not to be the
     // case so load it here.
     if (!empty($params['is_test'])) {
@@ -2131,6 +2132,28 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
     $i = $this->getContributionContactIndex();
     $contact = $this->utils->wf_civicrm_api('contact', 'getsingle', ['id' => $this->ent['contact'][$i]['id']]);
     $params += $contact;
+
+    // contact provides 'country' and 'country_id', but doPayment using PropertyBag expects 'billingCountry' with an iso_code
+    $countryName = $params['country'] ?? NULL;
+    $countryId = $params['country_id'] ?? NULL;
+    // providing country name throws deprecation warnings,
+    //  which break the transaction so remove it
+    unset($params['country']);
+
+    // country id seems more reliable, so use that first
+    if ($countryId) {
+      $params['billingCountry'] = $this->utils->wf_civicrm_api4('Country', 'get', [
+        'select' => ['iso_code'],
+        'where' => [['id', '=', $countryId]]
+      ])->first()['iso_code'] ?? '';
+    }
+    elseif ($countryName) {
+      $params['billingCountry'] = $this->utils->wf_civicrm_api4('Country', 'get', [
+        'select' => ['iso_code'],
+        'where' => [['name', '=', $countryName]]
+      ])->first()['iso_code'] ?? '';
+    }
+
     $params['contributionID'] = $params['id'] = $this->ent['contribution'][1]['id'];
     if (!empty($this->ent['contribution_recur'][1]['id'])) {
       $params['is_recur'] = TRUE;
