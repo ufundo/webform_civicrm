@@ -44,7 +44,8 @@ class WebformCivicrmConfirmForm  implements WebformCivicrmConfirmFormInterface {
 
       $processor_type =  $this->utils->wf_civicrm_api('payment_processor', 'getSingle', ['id' => $paramsDoPayment['payment_processor_id']]);
 
-      if (!empty($params['is_test'])) {
+      // not sure if this is needed?
+      if ($paramsDoPayment['is_test'] ?? FALSE) {
         $paymentProcessor = \Civi\Payment\System::singleton()->getByName($processor_type['name'], TRUE);
       }
 
