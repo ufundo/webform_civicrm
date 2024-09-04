@@ -30,7 +30,7 @@ jobs:
             civicrm: '5.74.*'
             php: '8.2'
           - drupal: '10.2.*'
-            civicrm: '5.75.x-dev'
+            civicrm: '5.77.x-dev'
             php: '8.2'
           - drupal: '10.3.*'
             civicrm: 'dev-master'
