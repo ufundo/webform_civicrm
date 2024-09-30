@@ -223,11 +223,13 @@ final class MembershipSubmissionTest extends WebformCivicrmTestBase {
     $fieldset->click();
     $this->getSession()->getPage()->fillField('Default value', '[current-page:query:membership]');
     $this->getSession()->getPage()->pressButton('Save');
+    $this->assertSession()->assertWaitOnAjaxRequest();
+    
+    $this->getSession()->getPage()->pressButton('Save elements');
 
     $this->drupalLogout();
     $this->drupalGet($this->webform->toUrl('canonical', ['query' => ['membership' => 2]]));
     $this->htmlOutput();
-    // ToDo ->
     $this->assertPageNoErrorMessages();
 
     $this->assertSession()->waitForField('First Name');
@@ -236,7 +238,6 @@ final class MembershipSubmissionTest extends WebformCivicrmTestBase {
     $this->assertSession()->pageTextContains('Basic Plus');
     $this->getSession()->getPage()->pressButton('Submit');
     $this->htmlOutput();
-    // ToDo ->
     $this->assertPageNoErrorMessages();
 
     $this->assertSession()->pageTextContains('New submission added to CiviCRM Webform Test.');
