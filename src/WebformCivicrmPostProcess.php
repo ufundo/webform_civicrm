@@ -2137,7 +2137,7 @@ class WebformCivicrmPostProcess extends WebformCivicrmBase implements WebformCiv
     $countryName = $params['country'] ?? NULL;
     $countryId = $params['country_id'] ?? NULL;
     // providing country name throws deprecation warnings,
-    //  which break the transaction so remove it
+    // which break the transaction so remove it
     unset($params['country']);
 
     // country id seems more reliable, so use that first
